@@ -1,0 +1,102 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "security:openssf-scorecard",
+        "customManagers:dockerfileVersions",
+        "customManagers:githubActionsVersions"
+    ],
+    "hostRules": [
+        {
+            "hostType": "repology",
+            "maxRequestsPerSecond": 1,
+            "concurrentRequestLimit": 1
+        }
+    ],
+    "packageRules": [
+        {
+            "description": "Don't automerge minor updates as they are considered major by Playwright",
+            "matchDatasources": [
+                "docker",
+                "npm",
+                "nuget"
+            ],
+            "matchUpdateTypes": [
+                "minor"
+            ],
+            "matchPackageNames": [
+                "mcr.microsoft.com/playwright",
+                "mcr.microsoft.com/playwright/**",
+                "Microsoft.Playwright",
+                "Microsoft.Playwright.**",
+                "@playwright/**"
+            ],
+            "automerge": false
+        },
+        {
+            "description": [
+                "Typescript minor updates should not be automerged",
+                "not because they themselves have breaking changes, but because libs usually hard cap the supported TS version, and NPM breaks"
+            ],
+            "matchDepNames": [
+                "typescript"
+            ],
+            "matchDatasources": [
+                "npm"
+            ],
+            "matchUpdateTypes": [
+                "minor"
+            ],
+            "automerge": false
+        }
+    ],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "description": "Update `*_VERSION` variables in bash scripts",
+            "managerFilePatterns": [
+                "/(^|/).*\\.sh$/"
+            ],
+            "matchStringsStrategy": "combination",
+            "matchStrings": [
+                "# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: (?:packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s+.+?_VERSION=(?<currentValue>.+?)\\s",
+                "# renovate: datasource=docker depName=(?<depName>[^\\s]+?)(?: (?:packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s+.+?_VERSION=(?<currentValue>[\\w][\\w.-]{0,127})@(?<currentDigest>sha256:[a-f0-9]{64})\\s"
+            ]
+        },
+        {
+            "description": "`customManagers:githubActionsVersions` extended with `registryUrl` until upstream merges it",
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/(^|/)(workflow-templates|\\.(?:github|gitea|forgejo)/(?:workflows|actions))/.+\\.ya?ml$/"
+            ],
+            "matchStrings": [
+                "# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: (?:lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s+[A-Za-z0-9_]+?_VERSION\\s*:\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
+            ]
+        },
+        {
+            "customType": "regex",
+            "description": "Update pnpm in devcontainer",
+            "managerFilePatterns": [
+                "/(^|/|\\.)devcontainer.json$/"
+            ],
+            "matchStrings": [
+                "# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s+\"(?:.*)\": \"(?<currentValue>.+?)\"\\s"
+            ]
+        },
+        {
+            "customType": "regex",
+            "description": "Update sst/opencode GitHub Action",
+            "managerFilePatterns": [
+                "/(^|/)(workflow-templates|\\.github/workflows)/.+\\.ya?ml$/"
+            ],
+            "matchStrings": [
+                "(?<indentation>\\s*)uses:\\s*sst\\/opencode\\/github@(?<currentDigest>[0-9a-f]{40})\\s*#\\s*(?<currentValue>github-v\\d+\\.\\d+\\.\\d+)"
+            ],
+            "depNameTemplate": "sst/opencode/github",
+            "packageNameTemplate": "sst/opencode",
+            "datasourceTemplate": "github-tags",
+            "depTypeTemplate": "action",
+            "versioningTemplate": "regex:^github-v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+            "autoReplaceStringTemplate": "{{indentation}}uses: {{depName}}@{{#if newDigest}}{{newDigest}}{{else}}{{currentDigest}}{{/if}} # {{#if newValue}}{{newValue}}{{else}}{{currentValue}}{{/if}}"
+        }
+    ]
+}

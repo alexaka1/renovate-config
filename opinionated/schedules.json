@@ -1,0 +1,21 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "packageRules": [
+        {
+            "description": "Schedule updates",
+            "matchPackageNames": [
+                "/^@?eslint(\\/|$)/",
+                "/^typescript-eslint$/",
+                "/^Scalar\\.AspNetCore$/",
+                "/^@types\\/node$/",
+                "/^pnpm$/",
+                "/^otel\\/opentelemetry-collector-contrib$/",
+                "/^mcr\\.microsoft\\.com\\/dotnet\\/aspire-dashboard$/",
+                "/^(@tailwindcss\\/|tailwindcss$)/"
+            ],
+            "schedule": [
+                "* * * * 0,6"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,63 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "labels": [
+        "dependencies"
+    ],
+    "packageRules": [
+        {
+            "matchDatasources": [
+                "npm",
+                "node-version"
+            ],
+            "addLabels": [
+                "javascript"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "nuget",
+                "dotnet-version"
+            ],
+            "addLabels": [
+                "dotnet"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "addLabels": [
+                "docker"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "terraform-module",
+                "terraform-provider"
+            ],
+            "addLabels": [
+                "terraform"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "gitlab-releases",
+                "gitlab-tags",
+                "gitlab-packages"
+            ],
+            "addLabels": [
+                "gitlab"
+            ]
+        },
+        {
+            "matchDatasources": [
+                "github-releases",
+                "github-tags",
+                "github-runners"
+            ],
+            "addLabels": [
+                "github"
+            ]
+        }
+    ]
+}

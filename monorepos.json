@@ -1,0 +1,39 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "packageRules": [
+        {
+            "groupName": "Playwright monorepo",
+            "description": "Group all Playwright packages together, because the installed browsers are tied to the package, even across data sources",
+            "matchDatasources": [
+                "docker",
+                "npm",
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "mcr.microsoft.com/playwright",
+                "mcr.microsoft.com/playwright/**",
+                "Microsoft.Playwright",
+                "Microsoft.Playwright.**",
+                "@playwright/**"
+            ]
+        },
+        {
+            "groupName": "bUnit monorepo",
+            "matchDatasources": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "bunit",
+                "bunit.generators"
+            ]
+        },
+        {
+            "description": "Group serwist packages",
+            "groupName": "Serwist monorepo",
+            "matchPackageNames": [
+                "serwist",
+                "/^@serwist//"
+            ]
+        }
+    ]
+}
