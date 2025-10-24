@@ -11,7 +11,9 @@
                 "/^pnpm$/",
                 "/^otel\\/opentelemetry-collector-contrib$/",
                 "/^mcr\\.microsoft\\.com\\/dotnet\\/aspire-dashboard$/",
-                "/^(@tailwindcss\\/|tailwindcss$)/"
+                "/^(@tailwindcss\\/|tailwindcss$)/",
+                "/^@sentry\\//",
+                "/^chainguard-dev\\/actions$/"
             ],
             "schedule": [
                 "* * * * 0,6"

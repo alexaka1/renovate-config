@@ -43,6 +43,16 @@
             "matchPackageNames": [
                 "mcr.microsoft.com/dotnet/nightly/**"
             ]
+        },
+        {
+            "groupName": "Node.js",
+            "matchDatasources": [
+                "node-version",
+                "docker"
+            ],
+            "matchPackageNames": [
+                "node"
+            ]
         }
     ]
 }
