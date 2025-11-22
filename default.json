@@ -63,16 +63,6 @@
             ]
         },
         {
-            "description": "`customManagers:githubActionsVersions` extended with `registryUrl` until upstream merges it",
-            "customType": "regex",
-            "managerFilePatterns": [
-                "/(^|/)(workflow-templates|\\.(?:github|gitea|forgejo)/(?:workflows|actions))/.+\\.ya?ml$/"
-            ],
-            "matchStrings": [
-                "# renovate: datasource=(?<datasource>[a-zA-Z0-9-._]+?) depName=(?<depName>[^\\s]+?)(?: (?:lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s+[A-Za-z0-9_]+?_VERSION\\s*:\\s*[\"']?(?<currentValue>.+?)[\"']?\\s"
-            ]
-        },
-        {
             "customType": "regex",
             "description": "Update pnpm in devcontainer",
             "managerFilePatterns": [
