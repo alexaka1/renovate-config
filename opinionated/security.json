@@ -15,7 +15,8 @@
                 "docker"
             ],
             "matchSourceUrls": [
-                "https://ghcr.io/**"
+                "https://ghcr.io/**",
+                "https://mcr.microsoft.com/**"
             ]
         },
         {
