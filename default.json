@@ -14,6 +14,15 @@
     ],
     "packageRules": [
         {
+            "description": "Remove older dependencies in the pnpm lockfile after npm updates",
+            "matchDatasources": [
+                "npm"
+            ],
+            "postUpdateOptions": [
+                "pnpmDedupe"
+            ]
+        },
+        {
             "description": "Don't automerge minor updates as they are considered major by Playwright",
             "matchDatasources": [
                 "docker",
